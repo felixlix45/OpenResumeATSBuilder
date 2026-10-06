@@ -400,6 +400,28 @@ select {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-3);
 }
+
+/*
+ * A row of labelled controls that must line up, optionally followed by a button.
+ *
+ * The columns are bottom-aligned, which aligns the *inputs* only because every
+ * column ends with one. Putting anything after an input in one column but not
+ * another — a hint, say — shifts that whole column and breaks the alignment, so
+ * per-row hints belong outside the row.
+ */
+.field-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr) auto;
+  gap: var(--space-2);
+  align-items: end;
+}
+.field-row > .field,
+.field-row > * > .field {
+  min-width: 0;
+}
+.field-row--even {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+}
 .grid-3 {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

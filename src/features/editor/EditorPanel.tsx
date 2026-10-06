@@ -234,7 +234,7 @@ function BasicsForm() {
         <div className="stack stack--tight">
           <span className="field__label">Links</span>
           {basics.links.map((link) => (
-            <div className="grid-2" key={link.id} style={{ alignItems: 'end' }}>
+            <div className="field-row" key={link.id}>
               <Field label="Label">
                 {({ id }) => (
                   <TextInput
@@ -250,39 +250,39 @@ function BasicsForm() {
                   />
                 )}
               </Field>
-              <div className="row" style={{ alignItems: 'flex-end' }}>
-                <div style={{ flex: 1, minWidth: 160 }}>
-                  <Field label="URL" hint="Becomes a clickable link — and its text is searchable.">
-                    {({ id }) => (
-                      <TextInput
-                        id={id}
-                        value={link.url}
-                        inputMode="url"
-                        placeholder="https://linkedin.com/in/you"
-                        onChange={(event) =>
-                          edit((draft) => {
-                            const target = draft.basics.links.find((candidate) => candidate.id === link.id);
-                            if (target) target.url = event.target.value;
-                          })
-                        }
-                      />
-                    )}
-                  </Field>
-                </div>
-                <IconButton
-                  label={`Remove ${link.label || 'link'}`}
-                  tone="danger"
-                  onClick={() =>
-                    edit((draft) => {
-                      draft.basics.links = draft.basics.links.filter((candidate) => candidate.id !== link.id);
-                    })
-                  }
-                >
-                  <TrashIcon />
-                </IconButton>
-              </div>
+              <Field label="URL">
+                {({ id }) => (
+                  <TextInput
+                    id={id}
+                    value={link.url}
+                    inputMode="url"
+                    placeholder="https://linkedin.com/in/you"
+                    onChange={(event) =>
+                      edit((draft) => {
+                        const target = draft.basics.links.find((candidate) => candidate.id === link.id);
+                        if (target) target.url = event.target.value;
+                      })
+                    }
+                  />
+                )}
+              </Field>
+              <IconButton
+                label={`Remove ${link.label || 'link'}`}
+                tone="danger"
+                onClick={() =>
+                  edit((draft) => {
+                    draft.basics.links = draft.basics.links.filter((candidate) => candidate.id !== link.id);
+                  })
+                }
+              >
+                <TrashIcon />
+              </IconButton>
             </div>
           ))}
+          <p className="field__hint">
+            The label is what readers see; the address is what makes it clickable. Both are printed, and the address
+            stays searchable for keyword screens.
+          </p>
           <div className="row">
             <Button
               size="sm"

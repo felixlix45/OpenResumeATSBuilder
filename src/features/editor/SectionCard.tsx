@@ -233,7 +233,7 @@ function SkillsBody({ section }: { section: Extract<Section, { kind: 'skills' }>
         Keyword screens read this section first. Use concrete, named skills — “PostgreSQL”, not “databases”.
       </p>
       {section.groups.map((group, index) => (
-        <div className="grid-2" key={group.id} style={{ alignItems: 'end' }}>
+        <div className="field-row" key={group.id}>
           <Field label={`Group ${index + 1} label`} optional>
             {({ id }) => (
               <TextInput
@@ -244,37 +244,33 @@ function SkillsBody({ section }: { section: Extract<Section, { kind: 'skills' }>
               />
             )}
           </Field>
-          <div className="row" style={{ alignItems: 'flex-end' }}>
-            <div style={{ flex: 1, minWidth: 160 }}>
-              <Field label="Skills (comma separated)">
-                {({ id }) => (
-                  <TextInput
-                    id={id}
-                    value={group.items.join(', ')}
-                    placeholder="TypeScript, Go, PostgreSQL"
-                    onChange={(event) =>
-                      updateGroup(group.id, {
-                        items: event.target.value
-                          .split(',')
-                          .map((item) => item.trim())
-                          .filter(Boolean),
-                      })
-                    }
-                  />
-                )}
-              </Field>
-            </div>
-            <IconButton
-              label={`Remove group ${index + 1}`}
-              tone="danger"
-              onClick={() =>
-                updateSection(section.id, { groups: section.groups.filter((candidate) => candidate.id !== group.id) })
-              }
-              disabled={section.groups.length <= 1}
-            >
-              <TrashIcon />
-            </IconButton>
-          </div>
+          <Field label="Skills (comma separated)">
+            {({ id }) => (
+              <TextInput
+                id={id}
+                value={group.items.join(', ')}
+                placeholder="TypeScript, Go, PostgreSQL"
+                onChange={(event) =>
+                  updateGroup(group.id, {
+                    items: event.target.value
+                      .split(',')
+                      .map((item) => item.trim())
+                      .filter(Boolean),
+                  })
+                }
+              />
+            )}
+          </Field>
+          <IconButton
+            label={`Remove group ${index + 1}`}
+            tone="danger"
+            onClick={() =>
+              updateSection(section.id, { groups: section.groups.filter((candidate) => candidate.id !== group.id) })
+            }
+            disabled={section.groups.length <= 1}
+          >
+            <TrashIcon />
+          </IconButton>
         </div>
       ))}
       <div className="row">
@@ -306,7 +302,7 @@ function LanguagesBody({ section }: { section: Extract<Section, { kind: 'languag
   return (
     <div className="stack stack--tight">
       {section.items.map((item, index) => (
-        <div className="grid-2" key={item.id} style={{ alignItems: 'end' }}>
+        <div className="field-row" key={item.id}>
           <Field label={`Language ${index + 1}`}>
             {({ id }) => (
               <TextInput
@@ -317,28 +313,24 @@ function LanguagesBody({ section }: { section: Extract<Section, { kind: 'languag
               />
             )}
           </Field>
-          <div className="row" style={{ alignItems: 'flex-end' }}>
-            <div style={{ flex: 1, minWidth: 160 }}>
-              <Field label="Level" optional>
-                {({ id }) => (
-                  <TextInput
-                    id={id}
-                    value={item.level}
-                    placeholder="Professional working proficiency"
-                    onChange={(event) => updateItem(item.id, { level: event.target.value })}
-                  />
-                )}
-              </Field>
-            </div>
-            <IconButton
-              label={`Remove language ${index + 1}`}
-              tone="danger"
-              disabled={section.items.length <= 1}
-              onClick={() => updateSection(section.id, { items: section.items.filter((c) => c.id !== item.id) })}
-            >
-              <TrashIcon />
-            </IconButton>
-          </div>
+          <Field label="Level" optional>
+            {({ id }) => (
+              <TextInput
+                id={id}
+                value={item.level}
+                placeholder="Professional working proficiency"
+                onChange={(event) => updateItem(item.id, { level: event.target.value })}
+              />
+            )}
+          </Field>
+          <IconButton
+            label={`Remove language ${index + 1}`}
+            tone="danger"
+            disabled={section.items.length <= 1}
+            onClick={() => updateSection(section.id, { items: section.items.filter((c) => c.id !== item.id) })}
+          >
+            <TrashIcon />
+          </IconButton>
         </div>
       ))}
       <div className="row">
