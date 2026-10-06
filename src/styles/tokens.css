@@ -1,0 +1,138 @@
+/**
+ * Design tokens.
+ *
+ * Every text colour here is checked against the surface it is used on by
+ * `src/styles/tokens.test.ts`, which parses this file and asserts WCAG 2.2
+ * contrast. Changing a value without re-running that test will fail the build.
+ *
+ * Contrast strategy: light mode is built on white and a very light canvas so the
+ * resume preview (a white page) reads as the brightest object on screen. Dark
+ * mode re-derives the same semantic roles rather than inverting them, so the
+ * preview stays white in both — a resume is printed on paper.
+ */
+
+:root {
+  /* ---- Semantic colour roles (light) ---- */
+  --color-canvas: #eef0f4;
+  --color-surface: #ffffff;
+  --color-surface-sunken: #f6f7f9;
+  --color-surface-raised: #ffffff;
+
+  --color-ink: #14161a; /* 18.11:1 on white */
+  --color-ink-secondary: #454b57; /* 8.76:1 on white */
+  --color-ink-muted: #5b6270; /* 6.4:1 on white, 6.0:1 on canvas */
+
+  --color-border: #dfe3e9;
+  --color-border-strong: #7c8493; /* 3.76:1 on white — non-text UI only */
+  --color-border-input: #6f7787;
+
+  --color-accent: #2354d6; /* 6.34:1 on white */
+  --color-accent-hover: #1b44ae;
+  --color-accent-soft: #e8eefe;
+  --color-accent-ink: #1a3f9e;
+
+  --color-success: #14663a;
+  --color-success-soft: #e3f4ea;
+  --color-warning: #8a5300;
+  --color-warning-soft: #fdf0dc;
+  --color-danger: #b3261e;
+  --color-danger-soft: #fdeceb;
+  --color-info: #1f5c8b;
+  --color-info-soft: #e6f1f9;
+
+  --color-focus-ring: #2354d6;
+  --color-overlay: rgba(20, 22, 26, 0.55);
+  --color-shadow: rgba(16, 20, 28, 0.12);
+  --color-shadow-strong: rgba(16, 20, 28, 0.22);
+
+  /* ---- Type ---- */
+  --font-ui: "Inter", "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial,
+    sans-serif;
+  --font-mono: "JetBrains Mono", "Cascadia Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --text-xs: 0.75rem; /* 12px */
+  --text-sm: 0.8125rem; /* 13px */
+  --text-base: 0.875rem; /* 14px */
+  --text-md: 0.9375rem; /* 15px */
+  --text-lg: 1.0625rem; /* 17px */
+  --text-xl: 1.3125rem; /* 21px */
+  --text-2xl: 1.625rem; /* 26px */
+
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* ---- Space ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* ---- Shape ---- */
+  --radius-sm: 4px;
+  --radius-md: 7px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px var(--color-shadow);
+  --shadow-md: 0 2px 8px var(--color-shadow);
+  --shadow-lg: 0 12px 32px var(--color-shadow-strong);
+
+  /* Minimum interactive target: WCAG 2.2 SC 2.5.8 asks for 24px; we ship 32. */
+  --target-min: 32px;
+
+  --ring: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-focus-ring);
+  --transition-fast: 110ms ease;
+  --transition-base: 180ms ease;
+}
+
+:root[data-theme='dark'] {
+  --color-canvas: #0d0f13;
+  --color-surface: #171a20;
+  --color-surface-sunken: #12151a;
+  --color-surface-raised: #1e222a;
+
+  --color-ink: #f3f5f8;
+  --color-ink-secondary: #bcc3ce;
+  --color-ink-muted: #9aa2af;
+
+  --color-border: #2b303a;
+  --color-border-strong: #59616f;
+  --color-border-input: #6b7382;
+
+  --color-accent: #8fb0ff;
+  --color-accent-hover: #a9c2ff;
+  --color-accent-soft: #1c2540;
+  --color-accent-ink: #b9cdff;
+
+  --color-success: #74d99b;
+  --color-success-soft: #14291d;
+  --color-warning: #f0b95c;
+  --color-warning-soft: #2c2314;
+  --color-danger: #ff9a92;
+  --color-danger-soft: #2f1a19;
+  --color-info: #86c5f0;
+  --color-info-soft: #14232e;
+
+  --color-focus-ring: #8fb0ff;
+  --color-overlay: rgba(4, 6, 9, 0.7);
+  --color-shadow: rgba(0, 0, 0, 0.4);
+  --color-shadow-strong: rgba(0, 0, 0, 0.6);
+}
+
+/* The resume page itself is always paper-white, in both themes. */
+:root {
+  --paper: #ffffff;
+  --paper-shadow: 0 1px 3px rgba(16, 20, 28, 0.16), 0 8px 24px rgba(16, 20, 28, 0.12);
+}
