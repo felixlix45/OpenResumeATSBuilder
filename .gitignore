@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+.vite/
+*.tsbuildinfo
+
+# Generated assets (recreated by `npm run predev` / `prebuild`)
+public/pdfjs/
+
+# Local verification artefacts
+.verify-out/
+.research-scratch/
+coverage/
+
+# Editor / OS noise
+*.local
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json

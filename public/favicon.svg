@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Resume Forge">
+  <rect width="32" height="32" rx="7" fill="#2354D6" />
+  <path
+    d="M10 7.5h8.2L23 12.3V24.5a1 1 0 0 1-1 1H10a1 1 0 0 1-1-1V8.5a1 1 0 0 1 1-1Z"
+    fill="#fff"
+    fill-opacity="0.95"
+  />
+  <path d="M18 7.5 23 12.5h-5v-5Z" fill="#2354D6" fill-opacity="0.35" />
+  <path
+    d="M12.2 17.6l2 2 4.6-4.6"
+    fill="none"
+    stroke="#2354D6"
+    stroke-width="2.1"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>
