@@ -266,4 +266,5 @@ editor paints before either arrives.
 
 ## License
 
-MIT — see [LICENSE](LICENSE) if present, otherwise add one before redistributing.
+MIT — see [LICENSE](LICENSE). Use it, fork it, self-host it, ship it in your own
+product. Attribution is appreciated but not required.
