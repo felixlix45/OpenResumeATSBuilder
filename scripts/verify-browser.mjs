@@ -378,6 +378,68 @@ async function main() {
     );
     console.log(`  layout: ${JSON.stringify(layout)}`);
 
+    // Controls that sit side by side in one row must actually line up. A hint
+    // rendered after the input in one column but not another silently shifts
+    // that whole column, which is easy to ship and easy to miss.
+    const ALIGNMENT_PROBE = `(() => {
+      const problems = [];
+      const rows = [...document.querySelectorAll('.field-row')];
+      rows.forEach((row, index) => {
+        const controls = [...row.querySelectorAll('input, select, textarea')];
+        if (controls.length < 2) return;
+        const geometry = controls.map((el) => {
+          const rect = el.getBoundingClientRect();
+          return { top: Math.round(rect.top), height: Math.round(rect.height), id: el.id };
+        });
+        const tops = geometry.map((g) => g.top);
+        const heights = geometry.map((g) => g.height);
+        const topSpread = Math.max(...tops) - Math.min(...tops);
+        const heightSpread = Math.max(...heights) - Math.min(...heights);
+        if (topSpread > 1 || heightSpread > 1) {
+          problems.push({ row: index, geometry, topSpread, heightSpread });
+        }
+      });
+      return { rows: rows.length, problems };
+    })()`;
+
+    const alignment = await evaluate(cdp, ALIGNMENT_PROBE);
+    console.log(`  field rows: ${alignment.rows}, misaligned: ${alignment.problems.length}`);
+    if (alignment.problems.length > 0) {
+      throw new Error(
+        `Side-by-side controls are not aligned in ${alignment.problems.length} row(s): ${JSON.stringify(
+          alignment.problems.slice(0, 3),
+        )}`,
+      );
+    }
+    if (alignment.rows < 5) {
+      throw new Error(`Expected several field rows on the content tab, found ${alignment.rows}.`);
+    }
+
+    // Negative control: recreate the exact bug this guards against — a hint
+    // rendered after the input in one column but not the other — and prove the
+    // probe notices. A guard that has never failed is not evidence of anything.
+    await evaluate(
+      cdp,
+      `(() => {
+        const input = document.querySelectorAll('.field-row')[0]?.querySelectorAll('input')[1];
+        if (!input) return false;
+        const hint = document.createElement('p');
+        hint.className = 'field__hint';
+        hint.textContent = 'injected hint';
+        hint.dataset.injected = 'true';
+        input.after(hint);
+        return true;
+      })()`,
+    );
+    const perturbed = await evaluate(cdp, ALIGNMENT_PROBE);
+    await evaluate(cdp, `(() => { document.querySelectorAll('[data-injected]').forEach((el) => el.remove()); return true; })()`);
+    if (perturbed.problems.length === 0) {
+      throw new Error('The alignment probe failed to detect a hint injected after one of two side-by-side inputs.');
+    }
+    console.log(
+      `  alignment probe self-test: detected the injected hint (${perturbed.problems[0].topSpread}px offset)`,
+    );
+
     // 2. Parser view.
     console.log('→ switching to the parser view');
     await evaluate(
